@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>المتجر الإلكتروني</title>
+    <script>
+      // GitHub Pages SPA fallback: redirect any deep link to the hash router.
+      (function () {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+        // Detect the repo base segment so we land back on the app root.
+        var segments = path.split('/').filter(Boolean);
+        var base = segments.length > 0 ? '/' + segments[0] + '/' : '/';
+        var route = path.indexOf(base) === 0 ? path.slice(base.length) : '';
+        var target = base + (hash && hash.length > 1 ? hash : (route ? '#/' + route : '')) + search;
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

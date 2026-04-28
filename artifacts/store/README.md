@@ -25,14 +25,29 @@ pnpm --filter @workspace/store run dev
 
 التطبيق يستخدم **HashRouter** ومسار نسبي (`./`)، فيعمل من أي مجلد فرعي.
 
-1. ابنِ المشروع:
+1. ابنِ المشروع للإنتاج (مهم: NODE_ENV=production):
    ```bash
-   pnpm --filter @workspace/store run build
+   NODE_ENV=production pnpm --filter @workspace/store run build
    ```
-2. ستجد الملفات في `artifacts/store/dist/public/`. ارفعها إلى فرع `gh-pages` أو
-   إلى `docs/` في مستودعك ثم فعّل GitHub Pages من إعدادات المستودع.
-3. زر العنوان: `https://<username>.github.io/<repo>/`. لا حاجة لإعدادات إضافية
-   لأن المسارات نسبية والتنقل يعتمد على `#`.
+2. ستجد الملفات في `artifacts/store/dist/public/` وتحتوي على:
+   - `index.html` — الصفحة الرئيسية
+   - `404.html` — صفحة احتياطية تعيد التوجيه للجذر
+   - `.nojekyll` — يمنع Jekyll من تجاهل الملفات
+   - `assets/` — ملفات JS و CSS
+   - `favicon.svg`, `opengraph.jpg`
+3. ارفع **محتويات** المجلد (وليس المجلد نفسه) إلى فرع `gh-pages` أو إلى `docs/`
+   في مستودعك. تأكد من نسخ ملف `.nojekyll` المخفي.
+4. من إعدادات المستودع → Pages → اختر الفرع/المجلد المناسب.
+5. زر العنوان: `https://<username>.github.io/<repo>/`. التنقل يعمل تلقائياً عبر
+   `#` بدون أي إعدادات إضافية على الخادم.
+
+### مشاكل شائعة على GitHub Pages
+
+- **شاشة بيضاء أو أخطاء console**: تأكد من بناء المشروع بـ `NODE_ENV=production`
+  حتى لا يتم تضمين إضافات التطوير في الإنتاج.
+- **404 على الأصول**: تأكد من رفع المجلد `assets/` بالكامل وملف `.nojekyll`.
+- **العنوان لا يعمل بعد إعادة التحميل**: نستخدم `#` في الروابط فلا يجب أن تحدث.
+  لو حدث، تحقق من وجود `404.html`.
 
 ## بيانات الدخول للأدمن
 
