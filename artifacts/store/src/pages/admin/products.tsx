@@ -96,7 +96,7 @@ export default function AdminProductsPage() {
     if (!file) return;
     setUploading(true);
     try {
-      const dataUrl = await fileToResizedDataUrl(file, 900, 0.85);
+      const dataUrl = await fileToResizedDataUrl(file, 700, 0.72);
       setForm((f) => ({ ...f, image: dataUrl }));
     } catch (err) {
       toast({ title: "تعذر تحميل الصورة", variant: "destructive" });

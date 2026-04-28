@@ -22,7 +22,7 @@ export type OrderItem = {
   name: string;
   price: number;
   quantity: number;
-  image: string;
+  image?: string;
 };
 
 export type Order = {
@@ -64,8 +64,32 @@ function read<T>(key: string, fallback: T): T {
   }
 }
 
+export class StorageQuotaError extends Error {
+  constructor() {
+    super("STORAGE_QUOTA_EXCEEDED");
+    this.name = "StorageQuotaError";
+  }
+}
+
+function isQuotaError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const name = err.name || "";
+  return (
+    name === "QuotaExceededError" ||
+    name === "NS_ERROR_DOM_QUOTA_REACHED" ||
+    /quota/i.test(err.message)
+  );
+}
+
 function write<T>(key: string, value: T): void {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (err) {
+    if (isQuotaError(err)) {
+      throw new StorageQuotaError();
+    }
+    throw err;
+  }
   window.dispatchEvent(new CustomEvent("store-change", { detail: { key } }));
 }
 
@@ -151,7 +175,25 @@ export const storage = {
       createdAt: Date.now(),
     };
     items.unshift(newOrder);
-    storage.saveOrders(items);
+    try {
+      storage.saveOrders(items);
+    } catch (err) {
+      if (err instanceof StorageQuotaError) {
+        // Self-heal: strip heavy image data from existing orders and retry.
+        const slimmed = items.map((o) => ({
+          ...o,
+          items: o.items.map(({ image: _omit, ...rest }) => rest),
+        }));
+        try {
+          storage.saveOrders(slimmed);
+        } catch {
+          // Last resort: keep only the latest 20 orders.
+          storage.saveOrders(slimmed.slice(0, 20));
+        }
+      } else {
+        throw err;
+      }
+    }
     return newOrder;
   },
   deleteOrder(id: string): void {

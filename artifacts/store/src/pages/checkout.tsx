@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { storage } from "@/lib/storage";
+import { storage, StorageQuotaError } from "@/lib/storage";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/image";
 import { useToast } from "@/hooks/use-toast";
@@ -100,20 +100,13 @@ export default function CheckoutPage() {
     if (detailed.length === 0) return;
     setSubmitting(true);
     const settings = storage.getSettings();
+    // Do not include image data URLs — they bloat localStorage and cause quota errors.
     const orderItems = detailed.map((d) => ({
       productId: d.product.id,
       name: d.product.name,
       price: d.product.price,
       quantity: d.quantity,
-      image: d.product.image,
     }));
-
-    storage.addOrder({
-      customerName: values.customerName.trim(),
-      customerPhone: values.customerPhone.trim(),
-      items: orderItems,
-      total,
-    });
 
     const link = buildWhatsAppLink(
       settings.whatsappNumber,
@@ -123,6 +116,33 @@ export default function CheckoutPage() {
       total,
       settings.storeName,
     );
+
+    try {
+      storage.addOrder({
+        customerName: values.customerName.trim(),
+        customerPhone: values.customerPhone.trim(),
+        items: orderItems,
+        total,
+      });
+    } catch (err) {
+      if (err instanceof StorageQuotaError) {
+        toast({
+          title: "مساحة التخزين ممتلئة",
+          description:
+            "احذف بعض الطلبات القديمة أو صور المنتجات الكبيرة من لوحة التحكم ثم حاول مرة أخرى. سيتم تحويلك إلى واتساب لإكمال الطلب.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "تعذر حفظ الطلب",
+          description: "سيتم تحويلك إلى واتساب لإكمال الطلب.",
+          variant: "destructive",
+        });
+      }
+      clear();
+      window.location.href = link;
+      return;
+    }
 
     clear();
     toast({
