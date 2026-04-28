@@ -6,6 +6,7 @@ import type { Product } from "@/lib/storage";
 import { formatPrice } from "@/lib/image";
 import { useCart } from "@/lib/cart";
 import { useToast } from "@/hooks/use-toast";
+import { StarRating } from "@/components/star-rating";
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -64,6 +65,14 @@ export function ProductCard({ product }: { product: Product }) {
           >
             {product.description}
           </p>
+        )}
+
+        {(product.rating ?? 0) > 0 && (
+          <StarRating
+            value={product.rating ?? 0}
+            reviewCount={product.reviewCount}
+            showCount
+          />
         )}
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">

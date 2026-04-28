@@ -66,57 +66,57 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Sky-blue palette */
+/* Semi-dark sky-blue palette (twilight) */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0, 132, 195, .05);
-  --elevate-2: rgba(0, 132, 195, .10);
+  --button-outline: rgba(255,255,255, .08);
+  --badge-outline: rgba(255,255,255, .06);
+  --opaque-button-border-intensity: 6;
+  --elevate-1: rgba(140, 200, 255, .05);
+  --elevate-2: rgba(140, 200, 255, .10);
 
-  --background: 200 60% 98%;
-  --foreground: 210 50% 12%;
-  --border: 200 40% 88%;
-  --input: 200 40% 90%;
-  --ring: 198 90% 48%;
+  --background: 215 32% 18%;
+  --foreground: 200 25% 94%;
+  --border: 215 25% 28%;
+  --input: 215 25% 24%;
+  --ring: 198 90% 60%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 210 50% 12%;
-  --card-border: 200 40% 90%;
+  --card: 215 28% 22%;
+  --card-foreground: 200 25% 94%;
+  --card-border: 215 22% 30%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 210 50% 12%;
-  --popover-border: 200 40% 90%;
+  --popover: 215 28% 22%;
+  --popover-foreground: 200 25% 94%;
+  --popover-border: 215 22% 30%;
 
-  --primary: 198 90% 48%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 198 90% 58%;
+  --primary-foreground: 215 50% 12%;
 
-  --secondary: 198 80% 92%;
-  --secondary-foreground: 210 60% 20%;
+  --secondary: 215 25% 28%;
+  --secondary-foreground: 200 25% 94%;
 
-  --muted: 200 40% 95%;
-  --muted-foreground: 210 20% 40%;
+  --muted: 215 25% 24%;
+  --muted-foreground: 200 18% 72%;
 
-  --accent: 195 85% 55%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 195 85% 60%;
+  --accent-foreground: 215 50% 12%;
 
-  --destructive: 0 70% 50%;
+  --destructive: 0 75% 58%;
   --destructive-foreground: 0 0% 100%;
 
-  --chart-1: 198 90% 48%;
-  --chart-2: 195 85% 55%;
-  --chart-3: 210 80% 60%;
-  --chart-4: 188 80% 50%;
-  --chart-5: 220 75% 65%;
+  --chart-1: 198 90% 58%;
+  --chart-2: 195 85% 60%;
+  --chart-3: 210 80% 65%;
+  --chart-4: 188 80% 55%;
+  --chart-5: 220 75% 70%;
 
-  --sidebar: 200 60% 97%;
-  --sidebar-foreground: 210 50% 15%;
-  --sidebar-border: 200 40% 88%;
-  --sidebar-primary: 198 90% 48%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 200 70% 92%;
-  --sidebar-accent-foreground: 210 60% 20%;
-  --sidebar-ring: 198 90% 48%;
+  --sidebar: 215 30% 20%;
+  --sidebar-foreground: 200 25% 94%;
+  --sidebar-border: 215 22% 28%;
+  --sidebar-primary: 198 90% 58%;
+  --sidebar-primary-foreground: 215 50% 12%;
+  --sidebar-accent: 215 25% 28%;
+  --sidebar-accent-foreground: 200 25% 94%;
+  --sidebar-ring: 198 90% 58%;
 
   --app-font-sans: 'Cairo', 'Tajawal', system-ui, sans-serif;
   --app-font-serif: 'Cairo', Georgia, serif;

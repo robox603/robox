@@ -54,9 +54,9 @@ export default function LoginPage() {
             </span>
             <div>
               <h1 className="text-xl font-bold" data-testid="text-login-title">
-                دخول لوحة التحكم
+                إنشاء حساب
               </h1>
-              <p className="text-sm text-white/85">للأدمن فقط</p>
+              <p className="text-sm text-white/85">سجّل دخولك للوصول للوحة التحكم</p>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
                     <FormControl>
                       <Input
                         autoComplete="username"
-                        placeholder="admin"
+                        placeholder="a7md"
                         {...field}
                         data-testid="input-username"
                       />

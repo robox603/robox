@@ -44,6 +44,8 @@ type FormState = {
   oldPrice: string;
   image: string;
   categoryId: string;
+  rating: string;
+  reviewCount: string;
 };
 
 const EMPTY: FormState = {
@@ -53,6 +55,8 @@ const EMPTY: FormState = {
   oldPrice: "",
   image: "",
   categoryId: NO_CATEGORY,
+  rating: "5",
+  reviewCount: "",
 };
 
 export default function AdminProductsPage() {
@@ -81,6 +85,8 @@ export default function AdminProductsPage() {
       oldPrice: p.oldPrice !== undefined ? String(p.oldPrice) : "",
       image: p.image,
       categoryId: p.categoryId ?? NO_CATEGORY,
+      rating: p.rating !== undefined ? String(p.rating) : "5",
+      reviewCount: p.reviewCount !== undefined ? String(p.reviewCount) : "",
     });
     setOpen(true);
   }
@@ -128,6 +134,25 @@ export default function AdminProductsPage() {
       oldPrice = op;
     }
 
+    let rating: number | undefined;
+    if (form.rating.trim()) {
+      const r = Number(form.rating);
+      if (!Number.isFinite(r) || r < 0 || r > 5) {
+        toast({ title: "التقييم يجب أن يكون بين 0 و 5", variant: "destructive" });
+        return;
+      }
+      rating = r;
+    }
+    let reviewCount: number | undefined;
+    if (form.reviewCount.trim()) {
+      const rc = Number(form.reviewCount);
+      if (!Number.isFinite(rc) || rc < 0 || !Number.isInteger(rc)) {
+        toast({ title: "عدد المراجعات غير صالح", variant: "destructive" });
+        return;
+      }
+      reviewCount = rc;
+    }
+
     const payload = {
       name,
       description: form.description.trim(),
@@ -135,6 +160,8 @@ export default function AdminProductsPage() {
       oldPrice,
       image: form.image,
       categoryId: form.categoryId === NO_CATEGORY ? undefined : form.categoryId,
+      rating,
+      reviewCount,
     };
 
     try {
@@ -360,6 +387,38 @@ export default function AdminProductsPage() {
                   لم تضف تصنيفات بعد. يمكنك إضافتها من صفحة التصنيفات.
                 </p>
               )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="p-rating">التقييم (نجوم 0-5)</Label>
+                <Input
+                  id="p-rating"
+                  type="number"
+                  inputMode="decimal"
+                  min="0"
+                  max="5"
+                  step="0.1"
+                  value={form.rating}
+                  onChange={(e) => setForm({ ...form, rating: e.target.value })}
+                  placeholder="مثال: 4.5"
+                  data-testid="input-product-rating"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="p-reviews">عدد المراجعات</Label>
+                <Input
+                  id="p-reviews"
+                  type="number"
+                  inputMode="numeric"
+                  min="0"
+                  step="1"
+                  value={form.reviewCount}
+                  onChange={(e) => setForm({ ...form, reviewCount: e.target.value })}
+                  placeholder="اختياري"
+                  data-testid="input-product-reviews"
+                />
+              </div>
             </div>
           </div>
 

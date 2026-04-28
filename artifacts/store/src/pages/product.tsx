@@ -8,6 +8,7 @@ import { useStorageVersion } from "@/lib/use-storage";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/image";
 import { useToast } from "@/hooks/use-toast";
+import { StarRating } from "@/components/star-rating";
 
 export default function ProductPage() {
   useStorageVersion();
@@ -75,6 +76,15 @@ export default function ProductPage() {
           <h1 className="text-3xl font-bold leading-tight md:text-4xl" data-testid="text-product-detail-name">
             {product.name}
           </h1>
+
+          {(product.rating ?? 0) > 0 && (
+            <StarRating
+              value={product.rating ?? 0}
+              size="md"
+              reviewCount={product.reviewCount}
+              showCount
+            />
+          )}
 
           <div className="flex items-end gap-3">
             <span className="text-3xl font-extrabold text-primary" data-testid="text-product-detail-price">

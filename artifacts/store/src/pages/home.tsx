@@ -26,7 +26,7 @@ export default function HomePage() {
   }, [products, search, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50/60 via-background to-background dark:from-background">
+    <div className="min-h-screen bg-gradient-to-b from-sky-950/40 via-background to-background">
       {/* Hero */}
       <section className="relative overflow-hidden border-b">
         <div className="absolute inset-0 gradient-sky opacity-90" />

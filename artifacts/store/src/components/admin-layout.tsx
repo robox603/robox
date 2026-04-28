@@ -25,7 +25,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   if (!storage.isAdmin()) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-background to-blue-50 dark:from-background dark:via-background dark:to-background">
+    <div className="min-h-screen bg-gradient-to-br from-sky-950/30 via-background to-blue-950/30">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 p-4 lg:flex-row lg:p-6">
         <aside className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] w-full lg:w-64 shrink-0">
           <div className="rounded-2xl border bg-card p-4 shadow-sm">

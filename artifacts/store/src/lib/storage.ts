@@ -12,6 +12,8 @@ export type Product = {
   oldPrice?: number;
   image: string;
   categoryId?: string;
+  rating?: number;
+  reviewCount?: number;
   createdAt: number;
 };
 
